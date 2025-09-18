@@ -67,7 +67,7 @@ class ResnetPGDAttacker:
             adv_images = adv_images + alpha * torch.sign(grad)
             # Projection step
             diff = adv_images - images
-            diff = torch.max(torch.min(diff, eps), -eps)
+            diff = torch.clamp(diff, min=-eps, max=eps)
             adv_images = images + diff
             adv_images = adv_images.detach()
 
